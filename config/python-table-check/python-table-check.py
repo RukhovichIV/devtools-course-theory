@@ -47,7 +47,8 @@ import urllib2
 import getpass
 import json
 
-def _github_repo_request(self, *resource, **parameters):
+# https: // api.github.com/repos/UNN-VMK-Software/devtools-course-practice/pulls?per_page = 1000?state = all
+def get_pulls_from_github():
     url = 'https://api.github.com/repos/UNN-VMK-Software/devtools-course-practice/pulls'
     req = urllib2.Request(url)
 
@@ -58,11 +59,9 @@ def _github_repo_request(self, *resource, **parameters):
         res = e.fp.read()
         return json.loads(res), str(e)
     res = response.read()
-    return json.loads(res)
+    data = json.loads(res)
 
-def get_pulls_from_github():
-    response = _github_repo_request('pulls')
-    print(response)
+    print(data)
 
 if __name__ == "__main__":
     # table = read_from_google_docs()
