@@ -42,5 +42,30 @@ def read_from_google_docs():
                 table[i][j][0] = values[i][j]
         return table
 
-table = read_from_google_docs()
-print(table)
+import urllib
+import urllib2
+import getpass
+import json
+
+def _github_repo_request(self, *resource, **parameters):
+    url = 'https://api.github.com/repos/UNN-VMK-Software/devtools-course-practice/pulls'
+    req = urllib2.Request(url)
+
+    try:
+        response = urllib2.urlopen(req)
+    except urllib2.HTTPError, e:
+        print('HTTP Error', e)
+        res = e.fp.read()
+        return json.loads(res), str(e)
+    res = response.read()
+    return json.loads(res)
+
+def get_pulls_from_github():
+    response = _github_repo_request('pulls')
+    print(response)
+
+if __name__ == "__main__":
+    # table = read_from_google_docs()
+    # print(table)
+
+    get_pulls_from_github()
